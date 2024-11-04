@@ -37,7 +37,7 @@ export default function Weather() {
             </form>
             <div className="Data">
                 <h2>{city}</h2>
-                <img src={icon} />
+                <img src={icon} alt="weather icon" />
                 <div>{temperature}</div>
                 <div>{description}</div>
                 <div>{humidity}</div>
