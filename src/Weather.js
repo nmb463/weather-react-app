@@ -29,21 +29,33 @@ export default function Weather() {
         setCity(event.target.value);
     }
     
-    return(
-        <div className="Weather">
-            <form onSubmit={searchWeather}>
-                <input type="search" onChange={updateCity} />
-                <input type="submit" value="Search" />
-            </form>
-            <div className="Data">
-                <h2>{city}</h2>
-                <img src={icon} alt="weather icon" />
-                <div>{temperature}</div>
-                <div>{description}</div>
-                <div>{humidity}</div>
-                <div>{wind}</div>
+    if (temperature === null) {
+        return (
+            <div className="Weather">
+                <form onSubmit={searchWeather}>
+                    <input type="search" onChange={updateCity} />
+                    <input type="submit" value="Search" />
+                </form>
             </div>
-            
-        </div>
-    );
+        )
+    } else {
+        return (
+            <div>
+                <div className="Weather">
+                    <form onSubmit={searchWeather}>
+                        <input type="search" onChange={updateCity} />
+                        <input type="submit" value="Search" />
+                    </form>
+                </div>
+                <div className="Data">
+                    <h2>Searching for {city}...</h2>
+                    <img src={icon} alt="weather icon" />
+                    <div>{temperature}</div>
+                    <div>{description}</div>
+                    <div>{humidity}</div>
+                    <div>{wind}</div>
+                </div>
+            </div>
+        )
+    }
 }
