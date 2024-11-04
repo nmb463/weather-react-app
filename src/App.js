@@ -5,13 +5,8 @@ import Weather from "./Weather";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>Weather App</h1>
-        <h2>By Nicole</h2>
-        <Weather />
-
-      </header>
+      <h1>React Weather Search</h1>
+      <Weather />
     </div>
   );
 }
