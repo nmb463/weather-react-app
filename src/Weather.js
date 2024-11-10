@@ -3,19 +3,19 @@ import axios from "axios";
 
 
 export default function Weather() {
-    let [city, setCity] = useState(null);
-    let [temperature, setTemperature] = useState(null);
-    let [description, setDescription] = useState(null);
-    let [humidity, setHumidity] = useState(null);
-    let [wind, setWind] = useState(null);
-    let [icon, setIcon] = useState(null);
+    const [city, setCity] = useState(null);
+    const [loaded, setLoaded] = useState(false);
+    const [weather, setWeather] = useState({});
 
     function displayWeather(response) {
-        setTemperature(`Temperature: ${Math.round(response.data.main.temp)}°F `);
-        setDescription(`Description: ${response.data.weather[0].description}`);
-        setHumidity(`Humidity ${response.data.main.humidity}%`);
-        setWind(`Wind: ${response.data.wind.speed} mi/h`);
-        setIcon(`https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
+        setLoaded(true);
+        setWeather({
+            temperature: response.data.main.temp,
+            description: response.data.weather[0].description,
+            humidity: response.data.main.humidity,
+            wind: response.data.wind.speed,
+            icon: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+        })
     }
 
     function searchWeather(event) {
@@ -29,33 +29,28 @@ export default function Weather() {
         setCity(event.target.value);
     }
     
-    if (temperature === null) {
-        return (
-            <div className="Weather">
-                <form onSubmit={searchWeather}>
+    let form = (
+        <form onSubmit={searchWeather}>
                     <input type="search" onChange={updateCity} />
                     <input type="submit" value="Search" />
-                </form>
-            </div>
-        )
-    } else {
+        </form>
+    )
+    if (loaded) {
         return (
             <div>
                 <div className="Weather">
-                    <form onSubmit={searchWeather}>
-                        <input type="search" onChange={updateCity} />
-                        <input type="submit" value="Search" />
-                    </form>
+                    <div>{form}</div>
                 </div>
                 <div className="Data">
-                    <h2>Searching for {city}...</h2>
-                    <img src={icon} alt="weather icon" />
-                    <div>{temperature}</div>
-                    <div>{description}</div>
-                    <div>{humidity}</div>
-                    <div>{wind}</div>
+                    <img src={weather.icon} alt={weather.description} />
+                    <div>Temperature: {Math.round(weather.temperature)}°F </div>
+                    <div>Description: {weather.description}</div>
+                    <div>Humidity {weather.humidity}%</div>
+                    <div>Wind: {weather.wind} mi/h</div>
                 </div>
             </div>
         )
+    } else {
+        return form;
     }
 }
