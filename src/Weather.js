@@ -10,19 +10,21 @@ export default function Weather() {
 
     function displayWeather(response) {
         setLoaded(true);
+        console.log(response);
         setWeather({
-            temperature: response.data.main.temp,
-            description: response.data.weather[0].description,
-            humidity: response.data.main.humidity,
+            date: "Sunday 6:00",
+            temperature: response.data.temperature.current,
+            description: response.data.condition.description,
+            humidity: response.data.temperature.humidity,
             wind: response.data.wind.speed,
-            icon: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+            icon: response.data.condition.icon_url,
         })
     }
 
     function searchWeather(event) {
         event.preventDefault();
-        let apiKey = `85bbd3d16a2dfe0ecf253c7ae1e8fe03`;
-        let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city} &appid=${apiKey}&units=imperial`;
+        const apiKey = `f917a08757btf485b3af40o0e41087f1`;
+        let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=imperial`;
         axios.get(apiUrl).then(displayWeather);
     }
 
@@ -49,7 +51,7 @@ export default function Weather() {
                 <div className="Data">
                     <h1>{city}</h1>
                     <ul>
-                        <li>Sunday 3:00 pm</li>
+                        <li>{weather.date}</li>
                         <li>{weather.description}</li>
                     </ul>
                     <div className="row mt-3">
@@ -59,7 +61,6 @@ export default function Weather() {
                             <span className="unit">°F</span>
                         </div>
                         <div className="col-6">
-                            <div>Precipitation:</div>
                             <div>Humidity {weather.humidity}%</div>
                             <div>Wind: {weather.wind} mi/h</div>
                         </div>
