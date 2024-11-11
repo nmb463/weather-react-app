@@ -1,15 +1,15 @@
 import React, {useState} from "react";
 import axios from "axios";
 import "./Weather.css";
-import FormattedDate from "./FormattedDate";
+import WeatherInfo from "./WeatherInfo";
 
 
-export default function Weather() {
-    const [city, setCity] = useState(null);
-    const [weather, setWeather] = useState({ready:false});
+export default function Weather(props) {
+    const [city, setCity] = useState(props.defaultCity);
+    const [weatherData, setWeatherData] = useState({ready:false});
 
     function displayWeather(response) {
-        setWeather({
+        setWeatherData({
             ready: true,
             name: response.data.city,
             date: new Date(response.data.time * 1000),
@@ -21,19 +21,25 @@ export default function Weather() {
         })
     }
 
-    function searchWeather(event) {
-        event.preventDefault();
+    function search() {
         const apiKey = `f917a08757btf485b3af40o0e41087f1`;
         let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=imperial`;
         axios.get(apiUrl).then(displayWeather);
+    }
+
+    function handleSubmit(event) {
+        event.preventDefault();
+        search();
     }
 
     function updateCity(event) {
         setCity(event.target.value);
     }
     
-    let form = (
-        <form onSubmit={searchWeather}>
+    if (weatherData.ready) {
+        return (
+            <div className="Weather">
+                 <form onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="col-9">
                             <input type="search" placeholder="Enter a city..." autoFocus="on" className="form-control" onChange={updateCity} />
@@ -42,35 +48,12 @@ export default function Weather() {
                             <input type="submit" value="Search" className="btn btn-primary w-100" />
                         </div>
                     </div>
-        </form>
-    )
-    if (weather.ready) {
-        return (
-            <div className="Weather">
-                <div>{form}</div>
-                <div className="Data">
-                    <h1>{weather.name}</h1>
-                    <ul>
-                        <li>
-                            <FormattedDate date={weather.date} />
-                        </li>
-                        <li>{weather.description}</li>
-                    </ul>
-                    <div className="row mt-3">
-                        <div className="col-6">
-                            <img src={weather.icon} alt={weather.description} />
-                            <span className="temperature">{Math.round(weather.temperature)}</span>
-                            <span className="unit">°F</span>
-                        </div>
-                        <div className="col-6">
-                            <div>Humidity {weather.humidity}%</div>
-                            <div>Wind: {weather.wind} mi/h</div>
-                        </div>
-                    </div>
-                </div>
+                </form>
+                <WeatherInfo data={weatherData} />
             </div>
         )
     } else {
-        return form;
+        search();
+        return("Loading...")
     }
 }

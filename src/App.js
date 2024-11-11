@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="App">
       <div className="Container">
-        <Weather />
+        <Weather defaultCity="Portland" />
         <footer>
           <a href="https://github.com/nmb463/weather-react-app" target="_blank" rel="noreferrer">Open-source code</a> by Nicole Banda
         </footer>
