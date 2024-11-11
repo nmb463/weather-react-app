@@ -3,7 +3,7 @@ import axios from "axios";
 import "./Weather.css";
 
 
-export default function Weather() {
+export default function Weather(props) {
     const [city, setCity] = useState(null);
     const [loaded, setLoaded] = useState(false);
     const [weather, setWeather] = useState({});
@@ -12,6 +12,7 @@ export default function Weather() {
         setLoaded(true);
         console.log(response);
         setWeather({
+            name: response.data.city,
             date: "Sunday 6:00",
             temperature: response.data.temperature.current,
             description: response.data.condition.description,
@@ -49,7 +50,7 @@ export default function Weather() {
             <div className="Weather">
                 <div>{form}</div>
                 <div className="Data">
-                    <h1>{city}</h1>
+                    <h1>{weather.name}</h1>
                     <ul>
                         <li>{weather.date}</li>
                         <li>{weather.description}</li>
