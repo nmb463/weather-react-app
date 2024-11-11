@@ -5,13 +5,11 @@ import "./Weather.css";
 
 export default function Weather(props) {
     const [city, setCity] = useState(null);
-    const [loaded, setLoaded] = useState(false);
-    const [weather, setWeather] = useState({});
+    const [weather, setWeather] = useState({ready:false});
 
     function displayWeather(response) {
-        setLoaded(true);
-        console.log(response);
         setWeather({
+            ready: true,
             name: response.data.city,
             date: "Sunday 6:00",
             temperature: response.data.temperature.current,
@@ -45,7 +43,7 @@ export default function Weather(props) {
                     </div>
         </form>
     )
-    if (loaded) {
+    if (weather.ready) {
         return (
             <div className="Weather">
                 <div>{form}</div>
