@@ -5,11 +5,10 @@ function App() {
   return (
     <div className="App">
       <div className="Container">
-        <h1>React Weather Search</h1>
         <Weather />
-        <div className="Links">
+        <footer>
           <a href="https://github.com/nmb463/weather-react-app" target="_blank" rel="noreferrer">Open-source code</a> by Nicole Banda
-        </div>
+        </footer>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
+import "./Weather.css";
 
 
 export default function Weather() {
@@ -31,22 +32,38 @@ export default function Weather() {
     
     let form = (
         <form onSubmit={searchWeather}>
-                    <input type="search" onChange={updateCity} />
-                    <input type="submit" value="Search" />
+                    <div className="row">
+                        <div className="col-9">
+                            <input type="search" placeholder="Enter a city..." autoFocus="on" className="form-control" onChange={updateCity} />
+                        </div>
+                        <div className="col-3">
+                            <input type="submit" value="Search" className="btn btn-primary w-100" />
+                        </div>
+                    </div>
         </form>
     )
     if (loaded) {
         return (
-            <div>
-                <div className="Weather">
-                    <div>{form}</div>
-                </div>
+            <div className="Weather">
+                <div>{form}</div>
                 <div className="Data">
-                    <img src={weather.icon} alt={weather.description} />
-                    <div>Temperature: {Math.round(weather.temperature)}°F </div>
-                    <div>Description: {weather.description}</div>
-                    <div>Humidity {weather.humidity}%</div>
-                    <div>Wind: {weather.wind} mi/h</div>
+                    <h1>{city}</h1>
+                    <ul>
+                        <li>Sunday 3:00 pm</li>
+                        <li>{weather.description}</li>
+                    </ul>
+                    <div className="row mt-3">
+                        <div className="col-6">
+                            <img src={weather.icon} alt={weather.description} />
+                            <span className="temperature">{Math.round(weather.temperature)}</span>
+                            <span className="unit">°F</span>
+                        </div>
+                        <div className="col-6">
+                            <div>Precipitation:</div>
+                            <div>Humidity {weather.humidity}%</div>
+                            <div>Wind: {weather.wind} mi/h</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
