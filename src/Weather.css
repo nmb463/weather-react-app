@@ -31,9 +31,7 @@
     list-style: none;
 }
 
-.Weather img{
-    height: 100px;
-    width: 100px;
+.Weather .WeatherIcon-current {
     margin-right: 10px;
 }
 
@@ -51,4 +49,9 @@
     line-height: 1;
     top: -32px;
     margin-left: 5px; 
+}
+
+.Weather .WeatherForecast-icon {
+    margin-top: 8px;
+    
 }
